@@ -11,3 +11,4 @@ namespace Debug
 		}
 	}
 }
+//DECLARE_LOG_CATEGORY_EXTERN(LogWarrior, Log, All);
