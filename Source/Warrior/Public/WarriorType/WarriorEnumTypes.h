@@ -15,3 +15,11 @@ enum class EWarriorValidType : uint8
 	Valid,
 	Invalid,
 };
+
+UENUM(BlueprintType)
+enum EToggleDamageType : uint8
+{
+	CurrentEquippedWeapon,
+	LeftHand,
+	RightHand,
+};
