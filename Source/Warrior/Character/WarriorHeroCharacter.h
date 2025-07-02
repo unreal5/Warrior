@@ -4,15 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "WarriorBaseCharacter.h"
-#include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 #include "WarriorHeroCharacter.generated.h"
 
+class UDataAsset_InputConfig;
 class USpringArmComponent;
 class UCameraComponent;
 class UInputAction;
 struct FInputActionValue;
-
 
 
 UCLASS(abstract)
@@ -27,67 +26,19 @@ class AWarriorHeroCharacter : public AWarriorBaseCharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FollowCamera;
-	
-protected:
 
-	/** Jump Input Action */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Input")
-	UInputAction* JumpAction;
-
-	/** Move Input Action */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Input")
-	UInputAction* MoveAction;
-
-	/** Look Input Action */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Input")
-	UInputAction* LookAction;
-
-	/** Mouse Look Input Action */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Input")
-	UInputAction* MouseLookAction;
 
 public:
-
 	/** Constructor */
-	AWarriorHeroCharacter();	
-
-protected:
-
-	/** Initialize input action bindings */
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-protected:
-
-	/** Called for movement input */
-	void Move(const FInputActionValue& Value);
-
-	/** Called for looking input */
-	void Look(const FInputActionValue& Value);
-
-public:
-
-	/** Handles move inputs from either controls or UI interfaces */
-	UFUNCTION(BlueprintCallable, Category="Input")
-	virtual void DoMove(float Right, float Forward);
-
-	/** Handles look inputs from either controls or UI interfaces */
-	UFUNCTION(BlueprintCallable, Category="Input")
-	virtual void DoLook(float Yaw, float Pitch);
-
-	/** Handles jump pressed inputs from either controls or UI interfaces */
-	UFUNCTION(BlueprintCallable, Category="Input")
-	virtual void DoJumpStart();
-
-	/** Handles jump pressed inputs from either controls or UI interfaces */
-	UFUNCTION(BlueprintCallable, Category="Input")
-	virtual void DoJumpEnd();
-
-public:
-
-	/** Returns CameraBoom subobject **/
+	AWarriorHeroCharacter();
+	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
-
-	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
-};
 
+private:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Character | Data", meta = (AllowPrivateAccess = "true"))
+	UDataAsset_InputConfig* InputConfigDataAsset;
+
+	void Input_Move(const FInputActionValue& Value);
+	void Input_Look(const FInputActionValue& Value);
+};
