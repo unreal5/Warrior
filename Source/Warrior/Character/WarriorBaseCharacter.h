@@ -3,15 +3,35 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemInterface.h"
 #include "GameFramework/Character.h"
 #include "WarriorBaseCharacter.generated.h"
 
+class UWarriorAttributeSet;
+class UWarriorAbilitySystemComponent;
+
 UCLASS()
-class WARRIOR_API AWarriorBaseCharacter : public ACharacter
+class WARRIOR_API AWarriorBaseCharacter : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
 	AWarriorBaseCharacter();
+	virtual void PossessedBy(AController* NewController) override;
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
+protected:
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = AbilitySystem)
+	UWarriorAbilitySystemComponent* WarriorAbilitySystemComponent;
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = AbilitySystem)
+	UWarriorAttributeSet* WarriorAttributeSet;
+
+public:
+	FORCEINLINE UWarriorAbilitySystemComponent* GetWarriorAbilitySystemComponent() const
+	{
+		return WarriorAbilitySystemComponent;
+	}
+
+	FORCEINLINE UWarriorAttributeSet* GetWarriorAttribute() const { return WarriorAttributeSet; }
 };

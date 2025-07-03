@@ -20,7 +20,7 @@ public class Warrior : ModuleRules
 			"UMG"
 		});
 
-		PrivateDependencyModuleNames.AddRange(new string[] { });
+		PrivateDependencyModuleNames.AddRange(new string[] { "GameplayAbilities", "GameplayTasks" });
 
 		PublicIncludePaths.AddRange(new string[]
 		{
