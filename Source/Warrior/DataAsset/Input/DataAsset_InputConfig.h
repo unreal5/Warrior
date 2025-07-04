@@ -16,10 +16,10 @@ struct FWarriorInputActionConfig
 	GENERATED_BODY()
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta=(Categories="InputTag"))
-	FGameplayTag InputTag;
+	FGameplayTag InputTag = FGameplayTag::EmptyTag;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UInputAction* InputAction;
+	UInputAction* InputAction = nullptr;
 };
 
 UCLASS()
