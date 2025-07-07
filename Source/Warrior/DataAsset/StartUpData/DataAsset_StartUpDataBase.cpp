@@ -6,25 +6,25 @@
 #include "AbilitySystem/WarriorAbilitySystemComponent.h"
 #include "AbilitySystem/Ability/WarriorGameplayAbility.h"
 
-void UDataAsset_StartUpDataBase::GiveToAbilitySystemComponent(UWarriorAbilitySystemComponent* InWarriorASC,
+void UDataAsset_StartUpDataBase::GiveToAbilitySystemComponent(UWarriorAbilitySystemComponent* InASC,
                                                               int32 InApplyLevel) const
 {
-	check(InWarriorASC);
-	GrantAbilities(ActivateOnGivenAbilities, InWarriorASC, InApplyLevel);
-	GrantAbilities(ReactiveAbilities, InWarriorASC, InApplyLevel);
+	check(InASC);
+	GrantAbilities(ActivateOnGivenAbilities, InASC, InApplyLevel);
+	GrantAbilities(ReactiveAbilities, InASC, InApplyLevel);
 }
 
 void UDataAsset_StartUpDataBase::GrantAbilities(const TArray<TSubclassOf<UWarriorGameplayAbility>>& InAbilities,
-                                                UWarriorAbilitySystemComponent* InWarriorASC, int32 InApplyLevel) const
+                                                UWarriorAbilitySystemComponent* InASC, int32 InApplyLevel) const
 {
-	check(InWarriorASC);
+	check(InASC);
 
 	for (const auto& AbilityClass : InAbilities)
 	{
 		if (!AbilityClass) continue;
 
 		FGameplayAbilitySpec AbilitySpec{AbilityClass, InApplyLevel};
-		AbilitySpec.SourceObject = InWarriorASC->GetAvatarActor();
-		InWarriorASC->GiveAbility(AbilitySpec);
+		AbilitySpec.SourceObject = InASC->GetAvatarActor();
+		InASC->GiveAbility(AbilitySpec);
 	}
 }

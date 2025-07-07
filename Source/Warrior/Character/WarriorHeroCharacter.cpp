@@ -10,6 +10,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "WarriorGameplayTags.h"
 #include "Component/Input/WarriorInputComponent.h"
+#include "DataAsset/StartUpData/DataAsset_StartUpDataBase.h"
 
 
 AWarriorHeroCharacter::AWarriorHeroCharacter()
@@ -59,6 +60,21 @@ void AWarriorHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	                                              ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
 	EnhancedInputComponent->BindNativeInputAction(InputConfigDataAsset, WarriorGameplayTags::InputTag_Look,
 	                                              ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
+}
+
+void AWarriorHeroCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+	// 对于软引用，应检查IsNull而不是IsValid()；
+	// IsValid()会检查指针是否为nullptr，但软引用可能是有效的，但指向的对象未加载。
+	if (!CharacterStartUpData.IsNull())
+	{
+		// 同步加载
+		if (auto LoadedData = CharacterStartUpData.LoadSynchronous())
+		{
+			LoadedData->GiveToAbilitySystemComponent(WarriorAbilitySystemComponent);
+		}
+	}
 }
 
 void AWarriorHeroCharacter::Input_Move(const FInputActionValue& Value)
