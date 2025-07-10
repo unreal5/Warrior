@@ -3,34 +3,22 @@
 
 #include "WarriorAbilitySystemComponent.h"
 
-
-// Sets default values for this component's properties
-UWarriorAbilitySystemComponent::UWarriorAbilitySystemComponent()
+void UWarriorAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& InputTag)
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	if (!InputTag.IsValid()) return;
 
-	// ...
+	for (const auto& AbilitySpec : GetActivatableAbilities())
+	{
+		if (!AbilitySpec.GetDynamicSpecSourceTags().HasTagExact(InputTag)) continue;
+		if (AbilitySpec.IsActive())
+		{
+			// 如果技能已经激活，则不再重复激活
+			continue;
+		}
+		TryActivateAbility(AbilitySpec.Handle);
+	}
 }
 
-
-// Called when the game starts
-void UWarriorAbilitySystemComponent::BeginPlay()
+void UWarriorAbilitySystemComponent::OnAbilityInputReleased(const FGameplayTag& InputTag)
 {
-	Super::BeginPlay();
-
-	// ...
-	
 }
-
-
-// Called every frame
-void UWarriorAbilitySystemComponent::TickComponent(float DeltaTime, ELevelTick TickType,
-                                                   FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-}
-

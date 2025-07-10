@@ -9,6 +9,7 @@
 #include "GameFramework/Controller.h"
 #include "EnhancedInputSubsystems.h"
 #include "WarriorGameplayTags.h"
+#include "AbilitySystem/WarriorAbilitySystemComponent.h"
 #include "Component/Combat/HeroCombatComponent.h"
 #include "Component/Input/WarriorInputComponent.h"
 #include "DataAsset/StartUpData/DataAsset_StartUpDataBase.h"
@@ -49,8 +50,8 @@ AWarriorHeroCharacter::AWarriorHeroCharacter()
 void AWarriorHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	// Super::SetupPlayerInputComponent(PlayerInputComponent);
-	UWarriorInputComponent* EnhancedInputComponent = CastChecked<UWarriorInputComponent>(PlayerInputComponent);
-	if (!EnhancedInputComponent) return;
+	UWarriorInputComponent* WarriorInputComponent = CastChecked<UWarriorInputComponent>(PlayerInputComponent);
+	if (!WarriorInputComponent) return;
 
 	APlayerController* PlayerController = GetController<APlayerController>();
 	if (!PlayerController) return;
@@ -60,10 +61,13 @@ void AWarriorHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	if (!Subsystem) return;
 
 	Subsystem->AddMappingContext(InputConfigDataAsset->DefaultMappingContext, 0);
-	EnhancedInputComponent->BindNativeInputAction(InputConfigDataAsset, WarriorGameplayTags::InputTag_Move,
-	                                              ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
-	EnhancedInputComponent->BindNativeInputAction(InputConfigDataAsset, WarriorGameplayTags::InputTag_Look,
-	                                              ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
+	WarriorInputComponent->BindNativeInputAction(InputConfigDataAsset, WarriorGameplayTags::InputTag_Move,
+	                                             ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
+	WarriorInputComponent->BindNativeInputAction(InputConfigDataAsset, WarriorGameplayTags::InputTag_Look,
+	                                             ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
+
+	WarriorInputComponent->BindAbilityInputAction(InputConfigDataAsset, this, &ThisClass::Input_AbilityInputPressed,
+	                                              &ThisClass::Input_AbilityInputReleased);
 }
 
 void AWarriorHeroCharacter::PossessedBy(AController* NewController)
@@ -97,4 +101,14 @@ void AWarriorHeroCharacter::Input_Look(const FInputActionValue& Value)
 	if (LookDirection.IsNearlyZero()) return;
 	AddControllerPitchInput(LookDirection.Y);
 	AddControllerYawInput(LookDirection.X);
+}
+
+void AWarriorHeroCharacter::Input_AbilityInputPressed(FGameplayTag InputTag)
+{
+	GetWarriorAbilitySystemComponent()->OnAbilityInputPressed(InputTag);
+}
+
+void AWarriorHeroCharacter::Input_AbilityInputReleased(FGameplayTag InputTag)
+{
+	GetWarriorAbilitySystemComponent()->OnAbilityInputReleased(InputTag);
 }

@@ -20,6 +20,11 @@ struct FWarriorInputActionConfig
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UInputAction* InputAction = nullptr;
+
+	bool IsValid() const
+	{
+		return InputTag.IsValid() && InputAction != nullptr;
+	}
 };
 
 UCLASS()
@@ -30,8 +35,12 @@ class WARRIOR_API UDataAsset_InputConfig : public UDataAsset
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UInputMappingContext* DefaultMappingContext;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta=(TitleProperty="InputTag"))
 	TArray<FWarriorInputActionConfig> NativeInputAction;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta=(TitleProperty="InputTag"))
+	TArray<FWarriorInputActionConfig> AbilityInputAction;
+	
 	UInputAction* FindNativeInputActionByTag(const FGameplayTag& InInputTag) const;
 };
