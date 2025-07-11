@@ -6,6 +6,7 @@
 #include "WarriorBaseAnimInstance.h"
 #include "WarriorCharacterAnimInstance.generated.h"
 
+class AWarriorHeroCharacter;
 class UCharacterMovementComponent;
 class AWarriorBaseCharacter;
 /**
@@ -26,6 +27,7 @@ protected:
 	AWarriorBaseCharacter* OwningCharacter;
 	UPROPERTY(Transient)
 	UCharacterMovementComponent* OwningMovementComponent;
+	
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "AnimData | Locomotion")
 	float GroundSpeed;
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "AnimData | Locomotion")

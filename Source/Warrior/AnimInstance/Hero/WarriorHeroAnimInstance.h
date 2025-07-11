@@ -20,7 +20,7 @@ public:
 	virtual void NativeThreadSafeUpdateAnimation(float DeltaSeconds) override;
 
 protected:
-	UPROPERTY(Transient)
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "AnimData | Reference")
 	AWarriorHeroCharacter* OwningHeroCharacter;
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "AnimData | Locomotion")
 	bool bShouldEnterRelax = false;
