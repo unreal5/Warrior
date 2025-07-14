@@ -18,5 +18,9 @@ public:
 	void OnAbilityInputReleased(const FGameplayTag& InputTag);
 
 	UFUNCTION(BlueprintCallable, Category = "Warrior|Ability", meta = (ApplyLevel = "1"))
-	void GrantHeroWeaponAbilities(const TArray<FWarriorHeroAbilitySet>& InDefaultWeaponAbilities, int32 ApplyLevel);
+	void GrantHeroWeaponAbilities(const TArray<FWarriorHeroAbilitySet>& InDefaultWeaponAbilities, int32 ApplyLevel,
+	                              TArray<FGameplayAbilitySpecHandle>& OutGrantAbilitySpecHandles);
+
+	UFUNCTION(BlueprintCallable, Category = "Warrior|Ability")
+	void RemoveGrantedAbilitySpecHandles(UPARAM(ref)TArray<FGameplayAbilitySpecHandle>& InSpecHandlesToRemove);
 };
