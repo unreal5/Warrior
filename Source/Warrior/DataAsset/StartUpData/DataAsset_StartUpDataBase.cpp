@@ -10,6 +10,7 @@ void UDataAsset_StartUpDataBase::GiveToAbilitySystemComponent(UWarriorAbilitySys
                                                               int32 InApplyLevel) const
 {
 	check(InASC);
+	
 	GrantAbilities(ActivateOnGivenAbilities, InASC, InApplyLevel);
 	GrantAbilities(ReactiveAbilities, InASC, InApplyLevel);
 }

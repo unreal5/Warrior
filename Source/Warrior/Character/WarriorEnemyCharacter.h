@@ -14,11 +14,14 @@ class WARRIOR_API AWarriorEnemyCharacter : public AWarriorBaseCharacter
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
 	AWarriorEnemyCharacter();
+	virtual void PossessedBy(AController* NewController) override;
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Combat)
 	UEnemyCombatComponent* EnemyCombatComponent;
+private:
+	void InitEnemyStartUpData();
 public:
 	FORCEINLINE UEnemyCombatComponent* GetEnemyCombatComponent() const { return EnemyCombatComponent; }
+	
 };
