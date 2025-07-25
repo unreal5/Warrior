@@ -46,3 +46,8 @@ void AWarriorEnemyCharacter::InitEnemyStartUpData()
 			                                                       GetWarriorAbilitySystemComponent());
 	                                                       }));
 }
+
+UPawnCombatComponent* AWarriorEnemyCharacter::GetPawnCombatComponent() const
+{
+	return GetEnemyCombatComponent();
+}

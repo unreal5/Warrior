@@ -41,7 +41,7 @@ public:
 	FORCEINLINE USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	FORCEINLINE UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 	FORCEINLINE UHeroCombatComponent* GetHeroCombatComponent() const { return HeroCombatComponent; }
-
+	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Character | Data", meta = (AllowPrivateAccess = "true"))
 	UDataAsset_InputConfig* InputConfigDataAsset;

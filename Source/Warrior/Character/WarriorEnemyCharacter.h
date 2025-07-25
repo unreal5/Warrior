@@ -23,5 +23,6 @@ private:
 	void InitEnemyStartUpData();
 public:
 	FORCEINLINE UEnemyCombatComponent* GetEnemyCombatComponent() const { return EnemyCombatComponent; }
+	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
 	
 };
