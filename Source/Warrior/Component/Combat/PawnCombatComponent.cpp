@@ -4,6 +4,8 @@
 #include "PawnCombatComponent.h"
 
 #include "WarriorDebugHelper.h"
+#include "Components/BoxComponent.h"
+#include "Item/Weapon/WarriorWeaponBase.h"
 
 void UPawnCombatComponent::RegisterSpawnedWeapon(FGameplayTag InWeaponTag, AWarriorWeaponBase* InWeapon,
                                                  bool bReigsterAsEquippedWeapon)
@@ -40,4 +42,20 @@ AWarriorWeaponBase* UPawnCombatComponent::GetCurrentCharacterEquippedWeapon() co
 	if (!CurrentEquippedWeaponTag.IsValid()) return nullptr;
 
 	return GetCharacterCarriedWeaponByTag(CurrentEquippedWeaponTag);
+}
+
+void UPawnCombatComponent::ToggleWeaponCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType)
+{
+	if (ToggleDamageType == EToggleDamageType::CurrentEquippedWeapon)
+	{
+		if (auto* EquippedWeapon = GetCurrentCharacterEquippedWeapon())
+		{
+			const auto CollisionState = bShouldEnable ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision;
+			EquippedWeapon->GetWeaponCollisionBox()->SetCollisionEnabled(CollisionState);
+		}
+
+		// Debug log
+		FString CollisionStateStr = bShouldEnable ? TEXT("Enabled") : TEXT("Disabled");
+		Debug::Print(CollisionStateStr);
+	}
 }

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
 #include "Component/PawnExtensionComponentBase.h"
+#include "WarriorType/WarriorEnumTypes.h"
 #include "PawnCombatComponent.generated.h"
 
 
@@ -27,6 +28,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Warrior | Combat")
 	AWarriorWeaponBase* GetCurrentCharacterEquippedWeapon() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Warrior | Combat")
+	void ToggleWeaponCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType = EToggleDamageType::CurrentEquippedWeapon);
 private:
 	TMap<FGameplayTag, AWarriorWeaponBase*> CharacterCarriedWeapons;
 };
