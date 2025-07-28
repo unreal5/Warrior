@@ -19,7 +19,7 @@ class WARRIOR_API UPawnCombatComponent : public UPawnExtensionComponentBase
 public:
 	UFUNCTION(BlueprintCallable, Category = "Warrior | Combat")
 	void RegisterSpawnedWeapon(FGameplayTag InWeaponTag, AWarriorWeaponBase* InWeapon,
-	                         bool bReigsterAsEquippedWeapon = false);
+	                           bool bReigsterAsEquippedWeapon = false);
 	UFUNCTION(BlueprintCallable, Category = "Warrior | Combat")
 	AWarriorWeaponBase* GetCharacterCarriedWeaponByTag(FGameplayTag InWeaponTag) const;
 
@@ -30,7 +30,12 @@ public:
 	AWarriorWeaponBase* GetCurrentCharacterEquippedWeapon() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Warrior | Combat")
-	void ToggleWeaponCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType = EToggleDamageType::CurrentEquippedWeapon);
+	void ToggleWeaponCollision(bool bShouldEnable,
+	                           EToggleDamageType ToggleDamageType = EToggleDamageType::CurrentEquippedWeapon);
+
+	virtual void OnHitTargetActor(AActor* HitActor){}
+	virtual void OnWeaponPulledFromTargetActor(AActor* InteractedActor){}
+
 private:
 	TMap<FGameplayTag, AWarriorWeaponBase*> CharacterCarriedWeapons;
 };

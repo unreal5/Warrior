@@ -25,6 +25,10 @@ void UPawnCombatComponent::RegisterSpawnedWeapon(FGameplayTag InWeaponTag, AWarr
 
 	CharacterCarriedWeapons.Emplace(InWeaponTag, InWeapon);
 
+	// OnWeaponHitTarget是简单的委托，不是多播委托，所以可以直接绑定，不需要使用UFunction
+	InWeapon->OnWeaponHitTarget.BindUObject(this, &ThisClass::OnHitTargetActor);
+	InWeapon->OnWeaponPulledFromTarget.BindUObject(this, &ThisClass::OnWeaponPulledFromTargetActor);
+	
 	if (bReigsterAsEquippedWeapon)
 	{
 		CurrentEquippedWeaponTag = InWeaponTag;
@@ -53,9 +57,5 @@ void UPawnCombatComponent::ToggleWeaponCollision(bool bShouldEnable, EToggleDama
 			const auto CollisionState = bShouldEnable ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision;
 			EquippedWeapon->GetWeaponCollisionBox()->SetCollisionEnabled(CollisionState);
 		}
-
-		// Debug log
-		FString CollisionStateStr = bShouldEnable ? TEXT("Enabled") : TEXT("Disabled");
-		Debug::Print(CollisionStateStr);
 	}
 }
