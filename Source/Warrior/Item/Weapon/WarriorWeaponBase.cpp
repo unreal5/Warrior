@@ -3,7 +3,6 @@
 
 #include "WarriorWeaponBase.h"
 
-#include "WarriorDebugHelper.h"
 #include "Components/BoxComponent.h"
 
 

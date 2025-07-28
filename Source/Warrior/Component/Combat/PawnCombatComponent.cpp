@@ -57,5 +57,9 @@ void UPawnCombatComponent::ToggleWeaponCollision(bool bShouldEnable, EToggleDama
 			const auto CollisionState = bShouldEnable ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision;
 			EquippedWeapon->GetWeaponCollisionBox()->SetCollisionEnabled(CollisionState);
 		}
+		if (!bShouldEnable) // 如果禁用碰撞，清除碰撞数组
+		{
+			OverlappedActors.Empty();
+		}
 	}
 }
