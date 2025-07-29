@@ -28,3 +28,9 @@ UHeroCombatComponent* UWarriorHeroGameplayAbility::GetHeroCombatComponentFromAct
 {
 	return GetHeroCharacterFromActorInfo()->GetHeroCombatComponent();
 }
+
+FGameplayEffectSpecHandle UWarriorHeroGameplayAbility::MakeHeroDamageEffectSpechHandle(
+	const TSubclassOf<UGameplayEffect>& EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag,
+	int32 InCurrentComboCount)
+{
+}
