@@ -31,7 +31,7 @@ public:
 	FGameplayEffectSpecHandle MakeHeroDamageEffectSpechHandle(const TSubclassOf<UGameplayEffect>& EffectClass,
 	                                                          float InWeaponBaseDamage,
 	                                                          FGameplayTag InCurrentAttackTypeTag,
-	                                                          int32 InCurrentComboCount);
+	                                                          int32 InCurrentComboCount) const;
 
 private:
 	TWeakObjectPtr<AWarriorHeroCharacter> CachedWarriorHeroCharacter;
