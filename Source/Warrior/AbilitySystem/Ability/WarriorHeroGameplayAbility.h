@@ -28,10 +28,10 @@ public:
 	UHeroCombatComponent* GetHeroCombatComponentFromActorInfo();
 
 	UFUNCTION(BlueprintPure, Category = "Warrior|Ability")
-	FGameplayEffectSpecHandle MakeHeroDamageEffectSpechHandle(const TSubclassOf<UGameplayEffect>& EffectClass,
+	FGameplayEffectSpecHandle MakeHeroDamageEffectSpechHandle(TSubclassOf<UGameplayEffect> EffectClass,
 	                                                          float InWeaponBaseDamage,
 	                                                          FGameplayTag InCurrentAttackTypeTag,
-	                                                          int32 InCurrentComboCount) const;
+	                                                          int32 InUsedComboCount) const;
 
 private:
 	TWeakObjectPtr<AWarriorHeroCharacter> CachedWarriorHeroCharacter;

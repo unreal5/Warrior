@@ -27,7 +27,7 @@ public:
 	FGameplayTag CurrentEquippedWeaponTag;
 
 	UFUNCTION(BlueprintCallable, Category = "Warrior | Combat")
-	AWarriorWeaponBase* GetCurrentCharacterEquippedWeapon() const;
+	AWarriorWeaponBase* GetCharacterCurrentEquippedWeapon() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Warrior | Combat")
 	void ToggleWeaponCollision(bool bShouldEnable,

@@ -4,10 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
+#include "ScalableFloat.h"
 #include "WarriorStructTypes.generated.h"
 
 class UInputMappingContext;
 class UWarriorHeroGameplayAbility;
+class UWarriorHeroLinkedAnimLayer;
 
 USTRUCT(BlueprintType)
 struct FWarriorHeroAbilitySet
@@ -22,7 +24,7 @@ struct FWarriorHeroAbilitySet
 
 	bool IsValid() const;
 };
-class UWarriorHeroLinkedAnimLayer;
+
 
 USTRUCT(BlueprintType)
 struct FWarriorHeroWeaponData
@@ -33,8 +35,11 @@ struct FWarriorHeroWeaponData
 	TSubclassOf<UWarriorHeroLinkedAnimLayer> WeaponAnimLayerToLink;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UInputMappingContext* WeaponInputMappingContext;
+	UInputMappingContext* WeaponInputMappingContext = nullptr;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta=(TitleProperty="InputTag"))
 	TArray<FWarriorHeroAbilitySet> DefaultWeaponAbilities;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FScalableFloat WeaponBaseDamage;
 };

@@ -41,7 +41,7 @@ AWarriorWeaponBase* UPawnCombatComponent::GetCharacterCarriedWeaponByTag(FGamepl
 	return nullptr != FoundWeapon ? *FoundWeapon : nullptr;
 }
 
-AWarriorWeaponBase* UPawnCombatComponent::GetCurrentCharacterEquippedWeapon() const
+AWarriorWeaponBase* UPawnCombatComponent::GetCharacterCurrentEquippedWeapon() const
 {
 	if (!CurrentEquippedWeaponTag.IsValid()) return nullptr;
 
@@ -52,7 +52,7 @@ void UPawnCombatComponent::ToggleWeaponCollision(bool bShouldEnable, EToggleDama
 {
 	if (ToggleDamageType == EToggleDamageType::CurrentEquippedWeapon)
 	{
-		if (auto* EquippedWeapon = GetCurrentCharacterEquippedWeapon())
+		if (auto* EquippedWeapon = GetCharacterCurrentEquippedWeapon())
 		{
 			const auto CollisionState = bShouldEnable ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision;
 			EquippedWeapon->GetWeaponCollisionBox()->SetCollisionEnabled(CollisionState);
