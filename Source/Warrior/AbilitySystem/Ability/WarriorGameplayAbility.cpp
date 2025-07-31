@@ -3,6 +3,7 @@
 
 #include "WarriorGameplayAbility.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystem/WarriorAbilitySystemComponent.h"
 #include "Component/Combat/PawnCombatComponent.h"
@@ -40,4 +41,26 @@ UPawnCombatComponent* UWarriorGameplayAbility::GetPawnCombatComponentFromActorIn
 UWarriorAbilitySystemComponent* UWarriorGameplayAbility::GetWarriorAbilitySystemComponentFromActorInfo() const
 {
 	return Cast<UWarriorAbilitySystemComponent>(GetAbilitySystemComponentFromActorInfo());
+}
+
+FActiveGameplayEffectHandle UWarriorGameplayAbility::NativeApplySpecHandleToTarget(AActor* TargetActor,
+	const FGameplayEffectSpecHandle& InSpecHandle) const
+{
+	checkf(InSpecHandle.IsValid(), TEXT("InSpecHandle is not valid in %s::%s"), *GetClass()->GetName(), *FString(__FUNCTION__));
+	
+	auto WarriorASC = GetWarriorAbilitySystemComponentFromActorInfo();
+	check(WarriorASC);
+	if (!WarriorASC || !TargetActor) return FActiveGameplayEffectHandle();
+
+	auto TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
+	check(TargetASC);
+	return WarriorASC->ApplyGameplayEffectSpecToTarget(*InSpecHandle.Data, TargetASC);
+}
+
+FActiveGameplayEffectHandle UWarriorGameplayAbility::BP_ApplySpecHandleToTarget(AActor* TargetActor,
+	const FGameplayEffectSpecHandle& InSpecHandle, EWarriorSuccessType& OutSuccessType) const
+{
+	auto ActiveGameplayEffectHandle = NativeApplySpecHandleToTarget(TargetActor, InSpecHandle);
+	OutSuccessType = ActiveGameplayEffectHandle.WasSuccessfullyApplied() ? EWarriorSuccessType::Successful : EWarriorSuccessType::Failed;
+	return ActiveGameplayEffectHandle;
 }

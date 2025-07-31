@@ -22,3 +22,10 @@ enum class EToggleDamageType : uint8
 	LeftHand,
 	RightHand,
 };
+
+UENUM(BlueprintType)
+enum class EWarriorSuccessType : uint8
+{
+	Successful UMETA(DisplayName = "Successful"),
+	Failed UMETA(DisplayName = "Failed"),
+};
