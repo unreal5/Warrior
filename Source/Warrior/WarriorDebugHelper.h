@@ -13,4 +13,13 @@ namespace Debug
 		}
 		UE_LOG(LogWarrior, Warning, TEXT("%s"), *Message);
 	}
+	static void Print(const FString& FloatTitle, float FloatValueToPrint, int32 InKey = -1, const FColor& Color = FColor::MakeRandomColor())
+	{
+		if (GEngine)
+		{
+			const FString Message = FString::Printf(TEXT("%s: %f"), *FloatTitle, FloatValueToPrint);
+			GEngine->AddOnScreenDebugMessage(InKey, 5.0f, Color, Message);
+		}
+		UE_LOG(LogWarrior, Warning, TEXT("%s: %f"), *FloatTitle, FloatValueToPrint);
+	}
 }
