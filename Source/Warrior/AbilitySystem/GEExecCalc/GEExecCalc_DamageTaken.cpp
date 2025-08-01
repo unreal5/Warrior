@@ -84,13 +84,14 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustom
 		OutExecutionOutput.AddOutputModifier(DamageTakenModifier);
 	}
 
+	/*
 	Debug::Print(TEXT("SourceAttackPower"), SourceAttackPower, 0, FColor::Green);
 	Debug::Print(TEXT("TargetDefensePower"), TargetDefensePower, 1, FColor::Red);
 	Debug::Print(TEXT("BaseDamage"), BaseDamage, 2, FColor::Blue);
 	Debug::Print(TEXT("UsedLightAttackComboCount"), UsedLightAttackComboCount, 3, FColor::Yellow);
 	Debug::Print(TEXT("UsedHeavyAttackComboCount"), UsedHeavyAttackComboCount, 4, FColor::Cyan);
 	Debug::Print(TEXT("FinalDamageDone"), FinalDamageDone, 5, FColor::Magenta);
-		
+	*/	
 }
 
 FWarriorDamageCapture::FWarriorDamageCapture()
